@@ -149,14 +149,12 @@ def get_meeting_gl_publish(meetingid, recording_path='/var/bigbluebutton/publish
 		for line in metadata:
 			if "gl-listed" in line:
 				if PUBLIC_VALUE in line:
-					return 200
-				if GL_AUTH_VALUE in line:
-					return "MATCH_ALL"
-				if GL_USER_PRIV_VALUE in line:
-					return "MATCH_USER"
-				if GL_USER_SHARE_VALUE in line:
+					#if public, force match_shared
 					return "MATCH_SHARED"
-				return 403
+				else:
+					#if not public, force match_shared
+					return "MATCH_SHARED"
+
 	except:
 		return 403
 
